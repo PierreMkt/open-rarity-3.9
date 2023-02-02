@@ -1,4 +1,5 @@
 import pytest
+from requests import HTTPError
 
 from open_rarity.resolver.rarity_providers.rank_resolver import RankResolver
 from open_rarity.resolver.rarity_providers.rarity_sniffer import RaritySnifferResolver
@@ -18,10 +19,10 @@ class TestRaritySnifferResolver:
         assert len(token_id_to_ranks) == 10_000
 
     def test_get_all_ranks_no_contract(self):
-        token_id_to_ranks = RaritySnifferResolver.get_all_ranks(
-            contract_address="0x123"
-        )
-        assert len(token_id_to_ranks) == 0
+        with pytest.raises(HTTPError):
+            token_id_to_ranks = RaritySnifferResolver.get_all_ranks(
+                contract_address="0x123"
+            )
 
     def test_rank_resolver_parent(self):
         assert isinstance(RaritySnifferResolver, RankResolver)
