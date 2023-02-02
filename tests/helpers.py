@@ -232,21 +232,20 @@ def generate_collection_with_token_traits(
 ) -> Collection:
     tokens = []
     for idx, token_traits in enumerate(tokens_traits):
-        match token_identifier_type:
-            case EVMContractTokenIdentifier.identifier_type:
-                identifier_type = EVMContractTokenIdentifier(
-                    contract_address="0x0", token_id=idx
-                )
-                token_standard = TokenStandard.ERC721
-            case SolanaMintAddressTokenIdentifier.identifier_type:
-                identifier_type = SolanaMintAddressTokenIdentifier(
-                    mint_address=f"Fake-Address-{idx}"
-                )
-                token_standard = TokenStandard.METAPLEX_NON_FUNGIBLE
-            case _:
-                raise ValueError(
-                    f"Unexpected token identifier type: {token_identifier_type}"
-                )
+        if token_identifier_type == EVMContractTokenIdentifier.identifier_type:
+            identifier_type = EVMContractTokenIdentifier(
+                contract_address="0x0", token_id=idx
+            )
+            token_standard = TokenStandard.ERC721
+        elif token_identifier_type == SolanaMintAddressTokenIdentifier.identifier_type:
+            identifier_type = SolanaMintAddressTokenIdentifier(
+                mint_address=f"Fake-Address-{idx}"
+            )
+            token_standard = TokenStandard.METAPLEX_NON_FUNGIBLE
+        else:
+            raise ValueError(
+                f"Unexpected token identifier type: {token_identifier_type}"
+            )
 
         tokens.append(
             Token(
