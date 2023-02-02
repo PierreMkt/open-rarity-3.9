@@ -56,7 +56,7 @@ class RaritySnifferResolver(RankResolver):
             try:
                 response_json = response.json()
             except JSONDecodeError:
-                response_json = ""
+                response_json = "Failed to decode JSON Response"
             logger.debug(
                 "[RaritySniffer] Failed to resolve Rarity Sniffer ranks for "
                 f"{contract_address}. Received: {response.status_code}: "
