@@ -1,6 +1,6 @@
 import datetime
 from dataclasses import dataclass, field
-from typing import Any
+from typing import Any, Union
 
 from open_rarity.models.utils.attribute_utils import normalize_attribute_string
 
@@ -43,9 +43,9 @@ class NumericAttribute:
     """
 
     name: AttributeName
-    value: float | int
+    value: Union[float, int]
 
-    def __init__(self, name: AttributeName, value: float | int):
+    def __init__(self, name: AttributeName, value: Union[float, int]):
         # We treat attributes names the same regardless of
         # casing or leading/trailing whitespaces.
         self.name = normalize_attribute_string(name)
@@ -74,7 +74,7 @@ class DateAttribute:
         self.value = value
 
 
-Attribute = StringAttribute | NumericAttribute | DateAttribute
+Attribute = Union[StringAttribute, NumericAttribute, DateAttribute]
 
 
 @dataclass

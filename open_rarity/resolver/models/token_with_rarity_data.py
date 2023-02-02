@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+from typing import Optional
 
 from open_rarity.models.token import Token
 
@@ -32,7 +33,7 @@ Score = float
 class RarityData:
     provider: RankProvider
     rank: Rank
-    score: Score | None = None
+    score: Optional[Score] = None
 
 
 @dataclass

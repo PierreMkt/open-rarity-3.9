@@ -1,4 +1,5 @@
 from random import shuffle
+from typing import Union, Optional
 
 from open_rarity.models.collection import Collection
 from open_rarity.models.token import Token
@@ -19,7 +20,7 @@ def create_evm_token(
     token_id: int,
     contract_address: str = "0xaaa",
     token_standard: TokenStandard = TokenStandard.ERC721,
-    metadata: TokenMetadata | None = None,
+    metadata: Optional[TokenMetadata] = None,
 ) -> Token:
     metadata = metadata or TokenMetadata()
     return Token(
@@ -226,7 +227,7 @@ def generate_onerare_rarity_collection(
 
 
 def generate_collection_with_token_traits(
-    tokens_traits: list[dict[str, str | int]],
+    tokens_traits: list[dict[str, Union[str, int]]],
     token_identifier_type: str = "evm_contract",
 ) -> Collection:
     tokens = []

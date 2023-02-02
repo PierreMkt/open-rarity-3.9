@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Annotated, Literal, Type, TypeAlias, Union
+from typing import Annotated, Literal, Type, Union
 
 from pydantic import Field
 
@@ -62,11 +62,11 @@ class SolanaMintAddressTokenIdentifier:
 # This is used to specifies how the collection is identified and the
 # logic used to group the NFTs together
 TokenIdentifier = Annotated[
-    (EVMContractTokenIdentifier | SolanaMintAddressTokenIdentifier),
+    (Union[EVMContractTokenIdentifier, SolanaMintAddressTokenIdentifier]),
     Field(discriminator="identifier_type"),
 ]
 
-TokenIdentifierClass: TypeAlias = Union[
+TokenIdentifierClass = Union[
     Type[EVMContractTokenIdentifier], Type[SolanaMintAddressTokenIdentifier]
 ]
 

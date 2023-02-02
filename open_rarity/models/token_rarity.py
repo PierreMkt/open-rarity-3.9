@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Optional
 
 from open_rarity.models.token import Token
 from open_rarity.models.token_ranking_features import TokenRankingFeatures
@@ -23,4 +24,4 @@ class TokenRarity:
     score: float
     token_features: TokenRankingFeatures
     token: Token
-    rank: int | None = None
+    rank: Optional[int] = None

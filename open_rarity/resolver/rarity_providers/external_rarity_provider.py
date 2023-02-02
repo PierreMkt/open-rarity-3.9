@@ -1,6 +1,7 @@
 import json
 import logging
 from collections import defaultdict
+from typing import Optional
 
 from open_rarity.models.token_identifier import EVMContractTokenIdentifier
 from open_rarity.resolver.models.collection_with_metadata import CollectionWithMetadata
@@ -307,7 +308,7 @@ class ExternalRarityProvider:
 
     def _get_cached_rank(
         self, slug: str, rank_provider: RankProvider, token_id: int
-    ) -> int | None:
+    ) -> Optional[int]:
         return self._get_cache_for_collection(slug, rank_provider).get(
             str(token_id), None
         )

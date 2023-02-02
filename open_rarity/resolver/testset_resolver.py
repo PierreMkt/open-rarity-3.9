@@ -8,7 +8,7 @@ import os
 import pkgutil
 from dataclasses import dataclass
 from time import strftime, time
-from typing import Iterable
+from typing import Iterable, Optional
 
 import numpy as np
 
@@ -220,7 +220,7 @@ def resolve_collection_data(
     max_tokens_to_calculate: int = None,
     use_cache: bool = True,
     output_file_to_disk: bool = True,
-) -> list | None:
+) -> Optional[list]:
     """Resolves collection information through OpenSea API
 
     Parameters
@@ -479,7 +479,7 @@ def resolve_open_rarity_score(
 
 def _get_provider_rank(
     provider: RankProvider, token_with_rarity: TokenWithRarityData
-) -> int | None:
+) -> Optional[int]:
     """Get rank for the particular provider
 
     Parameters
@@ -494,7 +494,7 @@ def _get_provider_rank(
     return rarity_datas[0].rank if len(rarity_datas) > 0 else None
 
 
-def _rank_diff(rank1: int | None, rank2: int | None) -> int | None:
+def _rank_diff(rank1: Optional[int], rank2: Optional[int]) -> Optional[int]:
     """Function that computes the rank difference
 
     Parameters
@@ -519,7 +519,7 @@ def serialize_to_csv(
     collection_with_metadata: CollectionWithMetadata,
     tokens_with_rarity: list[TokenWithRarityData],
     dry_run: bool = False,
-) -> list | None:
+) -> Optional[list]:
     """Serialize collection and ranking data to CSV
 
     Parameters

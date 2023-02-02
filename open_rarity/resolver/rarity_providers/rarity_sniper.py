@@ -1,4 +1,5 @@
 import logging
+from typing import Optional
 
 import requests
 
@@ -35,7 +36,7 @@ class RaritySniperResolver(RankResolver):
         return slug
 
     @staticmethod
-    def get_rank(collection_slug: str, token_id: int) -> int | None:
+    def get_rank(collection_slug: str, token_id: int) -> Optional[int]:
         url = RARITY_SNIPER_API_URL.format(slug=collection_slug, token_id=token_id)
         logger.debug("{url}".format(url=url))
         response = requests.request("GET", url, headers=USER_AGENT)
