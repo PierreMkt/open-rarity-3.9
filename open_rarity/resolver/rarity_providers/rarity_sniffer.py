@@ -1,6 +1,7 @@
 import logging
 
 import requests
+from requests import JSONDecodeError
 
 from .rank_resolver import RankResolver
 
@@ -52,10 +53,14 @@ class RaritySnifferResolver(RankResolver):
         )
 
         if response.status_code != 200:
+            try:
+                response_json = response.json()
+            except JSONDecodeError:
+                response_json = "Failed to decode JSON Response"
             logger.debug(
                 "[RaritySniffer] Failed to resolve Rarity Sniffer ranks for "
                 f"{contract_address}. Received: {response.status_code}: "
-                f"{response.reason} {response.json()}"
+                f"{response.reason} {response_json}"
             )
             response.raise_for_status()
 

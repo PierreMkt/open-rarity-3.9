@@ -1,4 +1,5 @@
 from random import shuffle
+from typing import Union, Optional
 
 from open_rarity.models.collection import Collection
 from open_rarity.models.token import Token
@@ -19,7 +20,7 @@ def create_evm_token(
     token_id: int,
     contract_address: str = "0xaaa",
     token_standard: TokenStandard = TokenStandard.ERC721,
-    metadata: TokenMetadata | None = None,
+    metadata: Optional[TokenMetadata] = None,
 ) -> Token:
     metadata = metadata or TokenMetadata()
     return Token(
@@ -226,26 +227,25 @@ def generate_onerare_rarity_collection(
 
 
 def generate_collection_with_token_traits(
-    tokens_traits: list[dict[str, str | int]],
+    tokens_traits: list[dict[str, Union[str, int]]],
     token_identifier_type: str = "evm_contract",
 ) -> Collection:
     tokens = []
     for idx, token_traits in enumerate(tokens_traits):
-        match token_identifier_type:
-            case EVMContractTokenIdentifier.identifier_type:
-                identifier_type = EVMContractTokenIdentifier(
-                    contract_address="0x0", token_id=idx
-                )
-                token_standard = TokenStandard.ERC721
-            case SolanaMintAddressTokenIdentifier.identifier_type:
-                identifier_type = SolanaMintAddressTokenIdentifier(
-                    mint_address=f"Fake-Address-{idx}"
-                )
-                token_standard = TokenStandard.METAPLEX_NON_FUNGIBLE
-            case _:
-                raise ValueError(
-                    f"Unexpected token identifier type: {token_identifier_type}"
-                )
+        if token_identifier_type == EVMContractTokenIdentifier.identifier_type:
+            identifier_type = EVMContractTokenIdentifier(
+                contract_address="0x0", token_id=idx
+            )
+            token_standard = TokenStandard.ERC721
+        elif token_identifier_type == SolanaMintAddressTokenIdentifier.identifier_type:
+            identifier_type = SolanaMintAddressTokenIdentifier(
+                mint_address=f"Fake-Address-{idx}"
+            )
+            token_standard = TokenStandard.METAPLEX_NON_FUNGIBLE
+        else:
+            raise ValueError(
+                f"Unexpected token identifier type: {token_identifier_type}"
+            )
 
         tokens.append(
             Token(

@@ -2,6 +2,7 @@ import warnings
 from collections import defaultdict
 from dataclasses import dataclass
 from functools import cached_property
+from typing import Optional
 
 from open_rarity.models.token import Token
 from open_rarity.models.token_metadata import (
@@ -76,9 +77,8 @@ class Collection:
         # We always coimpute the attributes_frequency_counts from the tokens to avoid
         # divergence.
         # TODO [10/16/22]: To remove in 1.0 release
-        attributes_frequency_counts: dict[AttributeName, dict[AttributeValue, int]]
-        | None = None,
-        name: str | None = "",
+        attributes_frequency_counts: Optional[dict[AttributeName, dict[AttributeValue, int]]] = None,
+        name: Optional[str] = "",
     ):
         if attributes_frequency_counts is not None:
             warnings.warn(

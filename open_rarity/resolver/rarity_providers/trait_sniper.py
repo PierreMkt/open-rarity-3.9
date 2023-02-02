@@ -1,6 +1,7 @@
 import logging
 import os
 import time
+from typing import Optional, Union
 
 import requests
 
@@ -111,7 +112,7 @@ class TraitSniperResolver(RankResolver):
             return []
 
     @staticmethod
-    def get_rank(collection_slug: str, token_id: int) -> int | None:
+    def get_rank(collection_slug: str, token_id: int) -> Optional[int]:
         """Sends a GET request to Trait Sniper API to fetch ranking
         data for a given EVM token. Trait Sniper uses opensea slug as a param.
 
@@ -135,7 +136,7 @@ class TraitSniperResolver(RankResolver):
         """
         # TODO [vicky]: In future, we can add retry mechanisms if needed
 
-        querystring: dict[str, str | int] = {
+        querystring: dict[str, Union[str, int]] = {
             "trait_norm": "true",
             "trait_count": "true",
             "token_id": token_id,

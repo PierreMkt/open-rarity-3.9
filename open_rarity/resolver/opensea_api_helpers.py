@@ -2,6 +2,7 @@ import json
 import logging
 import math
 import os
+from pathlib import Path
 
 import requests
 from requests.models import HTTPError
@@ -37,7 +38,7 @@ OS_METADATA_TRAIT_TYPE = "display_type"
 # "cached_data/{slug}_cached_os_trait_data.json"
 # which must contain a list of tokens in Token.to_dict() format.
 # See cached_data/boredapeyachtclub_cached_os_trait_data.json for example.
-OS_CACHE_FILENAME_FORMAT: str = "cached_data/%s_cached_os_trait_data.json"
+OS_CACHE_FILENAME_FORMAT: str = f"{Path(__file__).parent.parent.parent}/cached_data/%s_cached_os_trait_data.json"
 
 
 # Error is thrown if computatation is requested on a non-ERC721/1155
